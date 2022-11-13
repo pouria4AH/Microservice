@@ -12,6 +12,9 @@ namespace catalog.Api.Data
         {
             var client = new MongoClient(configuration.GetValue<string>("DatabaseSettings:mongodb://localhost:27017"));
             var database = client.GetDatabase(configuration.GetValue<string>("DatabaseSettings:DatabaseName"));
+            products = database.GetCollection<Product>(
+                configuration.GetValue<string>("DatabaseSettings:CollectionName"));
+            CatalogContextSeed.SeedData(products);
         }
     }
 }
