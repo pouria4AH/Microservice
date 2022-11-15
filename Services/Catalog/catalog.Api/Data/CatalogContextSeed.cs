@@ -11,7 +11,7 @@ namespace catalog.Api.Data
             bool existProduct = productCollection.Find(p => true).Any();
             if (!existProduct)
             {
-                productCollection.InsertManyAsync(GetSeedData)
+                productCollection.InsertManyAsync(GetSeedData());
             }
         }
         private static IEnumerable<Product> GetSeedData()

@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using catalog.Api.Data;
+using catalog.Api.Repositories;
 
 namespace catalog.Api
 {
@@ -31,6 +33,8 @@ namespace catalog.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "catalog.Api", Version = "v1" });
             });
+            services.AddScoped<ICatalogContext, CatalogContext>();
+            services.AddScoped<IProductRepository, ProductRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +46,7 @@ namespace catalog.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "catalog.Api v1"));
             }
-
+            
             app.UseRouting();
 
             app.UseAuthorization();
