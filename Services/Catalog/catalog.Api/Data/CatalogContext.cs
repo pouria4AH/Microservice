@@ -10,7 +10,7 @@ namespace catalog.Api.Data
 
         public CatalogContext(IConfiguration configuration)
         {
-            var client = new MongoClient(configuration.GetValue<string>("DatabaseSettings:mongodb://localhost:27017"));
+            var client = new MongoClient(configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
             var database = client.GetDatabase(configuration.GetValue<string>("DatabaseSettings:DatabaseName"));
             products = database.GetCollection<Product>(
                 configuration.GetValue<string>("DatabaseSettings:CollectionName"));
