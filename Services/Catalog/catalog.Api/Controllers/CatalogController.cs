@@ -3,8 +3,6 @@ using System.Net;
 using System.Threading.Tasks;
 using catalog.Api.Entities;
 using catalog.Api.Repositories;
-using DnsClient.Internal;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
