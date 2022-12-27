@@ -73,7 +73,7 @@ namespace catalog.Api.Controllers
 
         #endregion 
 
-        #region update product
+        #region delete product
         [HttpDelete("{id:length(24)}",Name = "DeleteProduct")]
         [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<Product>> DeleteProduct(string id)
