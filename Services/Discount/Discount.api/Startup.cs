@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Discount.api.Repositories;
 
 namespace Discount.api
 {
@@ -31,6 +32,7 @@ namespace Discount.api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Discount.api", Version = "v1" });
             });
+            services.AddScoped<IDiscountRepository, DiscountRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

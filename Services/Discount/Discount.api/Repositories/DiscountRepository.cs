@@ -20,9 +20,9 @@ namespace Discount.api.Repositories
         public async Task<Coupon> GetDiscount(string productName)
         {
             using var connection = new NpgsqlConnection(
-                _configuration.GetValue<string>("DatabaseSetting:ConnectionString"));
+                _configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
 
-            var coupon = await connection.QueryFirstOrDefaultAsync<Coupon>("SELECT * FROM Coupon WHERE @ProductName",new {productName = productName});
+            var coupon = await connection.QueryFirstOrDefaultAsync<Coupon>("SELECT * FROM Coupon WHERE ProductName = @ProductName",new {productName = productName});
 
             if (coupon == null)
             {
@@ -35,10 +35,10 @@ namespace Discount.api.Repositories
         public async Task<bool> CrateDiscount(Coupon coupon)
         {
             using var connection = new NpgsqlConnection(
-                _configuration.GetValue<string>("DatabaseSetting:ConnectionString"));
+                _configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
 
             var affected = await connection.ExecuteAsync(
-                "INSERT INTO Coupon (ProductName,Description,Amount) VALUES(@ProductName,@Description,@Amount)" ,new {ProductName = coupon.ProductName, Description = coupon.Description, Amount = coupon.Amount});
+                "INSERT INTO Coupon (ProductName,Description,Amount) VALUES(@ProductName,@Description,@Amount) " ,new {ProductName = coupon.ProductName, Description = coupon.Description, Amount = coupon.Amount});
             if (affected == 0) return false;
             return true;
         }
@@ -46,10 +46,10 @@ namespace Discount.api.Repositories
         public async Task<bool> UpdateDiscount(Coupon coupon)
         {
             using var connection = new NpgsqlConnection(
-                _configuration.GetValue<string>("DatabaseSetting:ConnectionString"));
+                _configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
             var affected = await connection.ExecuteAsync
-            ("UPDATE Coupon SET ProductName=@ProductName, Description=@Description, Amount=@Amount",
-                new { ProductName = coupon.ProductName, Description = coupon.Description, Amount = coupon.Amount });
+            ("UPDATE Coupon SET ProductName=@ProductName, Description=@Description, Amount=@Amount WHERE Id=@CouponId",
+                new { ProductName = coupon.ProductName, Description = coupon.Description, Amount = coupon.Amount , CouponId = coupon.Id});
 
             if (affected == 0) return false;
 
